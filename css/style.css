@@ -15,9 +15,55 @@ body {
     line-height: 1.8;
     margin: 0;
     padding: 20px;
+    padding-top: 80px; /* スティッキーヘッダーのため */
     background-color: var(--background-color);
     color: var(--text-color);
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a1d4a3' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Header and Navigation */
+.main-header {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    position: fixed; /* スティッキーヘッダーに変更 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.main-header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.main-header nav a {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    border-bottom: none; /* a タグの既存スタイルを上書き */
+}
+
+.main-header nav a:hover {
+    background-color: #e6f3e6;
+    color: var(--text-color);
+}
+
+.main-header nav a.active {
+    background-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .container {
@@ -27,8 +73,6 @@ body {
     padding: 35px 40px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    border: 5px solid #ffffff;
-    outline: 3px solid var(--secondary-color);
 }
 
 h1, h2 {
@@ -54,10 +98,23 @@ h2::before {
 }
 
 .profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     margin-bottom: 40px;
     padding-bottom: 20px;
-    border-bottom: 2px dashed var(--secondary-color);
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    border: 4px solid #fff;
 }
 
 .profile-header h1 {
@@ -73,29 +130,40 @@ h2::before {
     display: inline-block;
     padding: 5px 15px;
     border-radius: 10px;
+    height: 1.5em; /* 高さを固定してガタつきを防ぐ */
 }
 
 .section {
     margin-bottom: 35px;
 }
 
-ul {
+.section ul {
     list-style-type: none;
     padding: 0;
 }
 
-li {
+.section li {
     background: #fafbe8;
     margin-bottom: 10px;
     padding: 15px 20px;
     border-radius: 15px;
     border: 2px solid #e3e1c4;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: baseline;
 }
 
-li:hover {
+.section li:hover {
     background-color: #fefdf0;
     transform: translateY(-3px);
+}
+
+.year {
+    display: inline-block;
+    width: 5.5em;
+    font-weight: bold;
+    color: var(--secondary-color);
+    flex-shrink: 0;
 }
 
 a {
@@ -132,11 +200,293 @@ a:hover {
     background-color: #66bb6a;
 }
 
+.social-links {
+    text-align: center;
+    margin: 0 0 15px 0;
+    padding: 0;
+    border: none;
+}
+
+.social-links a {
+    display: inline-block;
+    margin: 0 12px;
+    border-bottom: none;
+}
+
+.social-links a:hover {
+    background-color: transparent;
+    transform: translateY(-3px);
+    transition: transform 0.2s ease-out;
+}
+
+.social-links img {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+}
+
 footer {
     text-align: center;
     margin-top: 50px;
     padding-top: 20px;
-    border-top: 2px dashed var(--secondary-color);
+    border-top: 1px solid #e0e0e0;
     font-size: 0.9em;
     color: var(--secondary-color);
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: var(--text-color);
+    animation: blink 1s infinite;
+    vertical-align: middle;
+    margin-left: 4px;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Contact Form */
+#contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+#contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+#contact-form input,
+#contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #e3e1c4;
+    background-color: #fafbe8;
+    font-family: var(--font-family);
+    font-size: 1em;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(129, 199, 132, 0.5);
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-family: var(--font-family);
+    font-size: 1.2em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.submit-button:hover {
+    background-color: #66bb6a;
+    transform: translateY(-2px);
+}
+
+/* --- Apple Page Styles --- */
+
+body {
+    background-color: #f5f5f7;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1d1d1f;
+    padding: 0;
+    background-image: none;
+}
+
+.apple-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.apple-header {
+    text-align: center;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-headline {
+    font-size: 48px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.compare-models-link {
+    font-size: 16px;
+    color: #0066cc;
+    text-decoration: none;
+    border-bottom: none;
+}
+.compare-models-link:hover {
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.product-info h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 5px 0;
+    background: none;
+    padding: 0;
+}
+.product-info h2::before {
+    content: '';
+}
+
+
+.new-badge {
+    color: #bf4800;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0;
+}
+
+.product-info p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+.price {
+    font-size: 14px;
+    color: #1d1d1f;
+    margin-top: auto; /* Pushes price and buttons to the bottom */
+}
+
+.card-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.button {
+    background-color: #0071e3;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 980px;
+    font-size: 14px;
+    font-weight: 400;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #0077ed;
+    color: #fff;
+}
+
+.text-link {
+    color: #0066cc;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: none;
+}
+
+.text-link:hover {
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+/* --- Business Page Layout --- */
+
+.business-content {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    gap: 25px; /* Space between image and text */
+}
+
+.business-logo {
+    width: 130px;
+    height: 130px;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 12px;
+    flex-shrink: 0; /* Prevents the image from shrinking */
+}
+
+.business-content p {
+    margin: 0; /* Remove default margin from paragraph */
+}
+
+.text-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.website-link-container {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.website-link {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+    border-bottom: none;
+}
+
+.website-link:hover {
+    background-color: #66bb6a;
+    color: #fff;
+    transform: translateY(-2px);
 }
